@@ -1,0 +1,9 @@
+create database libreria;
+
+use libreria;
+
+create table publisher ( id varchar(4) not null, nome varchar(100) not null, primary key (id));
+
+create table libro (isbn varchar(50) not null, titolo varchar(100) not null, publisherId varchar(4), primary key (isbn), foreign key (publisherId) references publisher (id);
+
+create table capitoli ( id varchar(50) not null, titolo varchar(100) not null, libroIsbn varchar(50), primary key (id), foreign key (libroIsbn) references libro (id));
