@@ -4,20 +4,28 @@ import java.util.List;
 
 public class Libro {
 	private String isbn;
-	private String titolo;
+	private String name;
 	private Publisher publisher;
-	private List<Capitoli> capitoli;
+	private List<Chapter> chapters;
+	
+	public Libro() {}
+	public Libro(String isbn, String name, Publisher publisher) {
+		this.isbn = isbn;
+		this.name = name;
+		this.publisher = publisher;
+	}
+
 	public String getIsbn() {
 		return isbn;
 	}
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-	public String getTitolo() {
-		return titolo;
+	public String getName() {
+		return name;
 	}
-	public void setTitolo(String titolo) {
-		this.titolo = titolo;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public Publisher getPublisher() {
 		return publisher;
@@ -25,13 +33,60 @@ public class Libro {
 	public void setPublisher(Publisher publisher) {
 		this.publisher = publisher;
 	}
-	public List<Capitoli> getCapitoli() {
-		return capitoli;
+	public List<Chapter> getChapters() {
+		return chapters;
 	}
-	public void setCapitoli(List<Capitoli> capitoli) {
-		this.capitoli = capitoli;
+	public void setChapters(List<Chapter> chapters) {
+		this.chapters = chapters;
 	}
 	
-	
-	
+	@Override
+	public String toString() {
+		return "Book [isbn=" + isbn + ", name=" + name + ", publisher="
+				+ publisher + ", chapters=" + chapters + "]";
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
