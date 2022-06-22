@@ -1,25 +1,36 @@
 package com.classi.jpa;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "actor")
 public class Actor implements Serializable {
 
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "actor_id", unique = true)
 	private int id;
 	
-	
+	@Column(name = "actor_firstname", nullable = false)
 	private String name;
 	
-	
+	@Column(name = "actor_lastname", nullable = false)
 	private String lastName;
 	
+	@Column(name = "actor_birthdate_year", nullable = false)
+	private int birthdateYear;
 	
-	private int birthdate;
+	@ManyToMany
+	Set<Movie> actedMovies;
 
 
 	public int getId() {
@@ -53,18 +64,18 @@ public class Actor implements Serializable {
 
 
 	public int getBirthdate() {
-		return birthdate;
+		return birthdateYear;
 	}
 
 
-	public void setBirthdate(int birthdate) {
-		this.birthdate = birthdate;
+	public void setBirthdate(int birthdateYear) {
+		this.birthdateYear = birthdateYear;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Actor [id=" + id + ", name=" + name + ", lastName=" + lastName + ", birthdate=" + birthdate + "]";
+		return "Actor [id=" + id + ", name=" + name + ", lastName=" + lastName + ", birthdate=" + birthdateYear + "]";
 	}
 	
 	
