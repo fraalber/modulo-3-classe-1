@@ -6,6 +6,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import com.classi.jpa.Actor;
+import com.classi.jpa.Movie;
 
 public class Main {
 
@@ -24,6 +25,7 @@ public class Main {
 		createActorNoId("Tom", "Cruise", 1970);
 		createActorNoId("Tom", "Cruise", 1976);
 		createActorNoId("Tom", "Cruise", 1975);
+		createMovieNoId("Mission Impossible", 1995, 3);
 
 	}
 	
@@ -84,6 +86,41 @@ public class Main {
 
             // Save the student object
             manager.persist(act);
+
+            // Commit the transaction
+            transaction.commit();
+        } catch (Exception ex) {
+            // If there are any exceptions, roll back the changes
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            // Print the Exception
+            ex.printStackTrace();
+        } finally {
+            // Close the EntityManager
+            manager.close();
+        }
+    }
+	
+	public static void createMovieNoId(String title, int releaseYear , int genreId) {
+        // Create an EntityManager
+        EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+
+        try {
+            // Get a transaction
+            transaction = manager.getTransaction();
+            // Begin the transaction
+            transaction.begin();
+
+            // Create a new Student object
+            Movie mov = new Movie();
+            mov.setTitle(title);
+            mov.setReleaseYear(releaseYear);
+            mov.setGenreId(genreId);
+
+            // Save the student object
+            manager.persist(mov);
 
             // Commit the transaction
             transaction.commit();

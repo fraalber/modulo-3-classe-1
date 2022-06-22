@@ -11,12 +11,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "genre")
-public class Genre implements Serializable {
+public class Genre extends Base implements Serializable {
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", unique = true)
-	private int id;
+//	@Id
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	@Column(name = "id", unique = true)
+//	private int id;
 	
 	@Column(name = "name", unique = true)
 	private String name;

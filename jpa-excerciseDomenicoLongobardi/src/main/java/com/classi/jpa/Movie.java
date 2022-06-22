@@ -16,12 +16,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "movie")
-public class Movie implements Serializable{
+public class Movie extends Base implements Serializable{
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "movie_id", unique = true)
-	private int id;
+//	@Id
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	@Column(name = "movie_id", unique = true)
+//	private int id;
 	
 	@Column(name = "title", unique = true)
 	private String title;
@@ -42,12 +42,12 @@ public class Movie implements Serializable{
 	Set<Actor> actorsInTheMovie;
 	
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+//	public int getId() {
+//		return id;
+//	}
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 	public String getTitle() {
 		return title;
 	}
