@@ -1,7 +1,17 @@
 package com.classe1.jpa;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import repository.ActorRepository;
+import repository.GenericRepository;
+import repository.GenreRepository;
+import repository.MovieRepository;
 
 public class Main {
 
@@ -9,32 +19,115 @@ public class Main {
     //private EntityManager entityManager;
 
     // Create an EntityManagerFactory when you start the application.
-    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence
+	private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence
             .createEntityManagerFactory("JavaHelps");
 
     public static void main(String[] args) {
     	
+    	EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+    	GenericRepository genericRepository = new GenericRepository(entityManager);
+    	    	
+    	Set<Movie> set = new HashSet<>();
     	
+    	Movie movie = new Movie();
+    	movie.setTitle("Spider-Man: Homecoming");
+    	movie.setYearOfRelease(2017);
+    	
+    	genericRepository.insert(movie);
+    	
+    	set.add(movie);
+    	
+    	movie = new Movie();
+    	movie.setTitle("Uncharted");
+    	movie.setYearOfRelease(2022);
+    	
+    	genericRepository.insert(movie);
+    	
+    	set.add(movie);
+    	
+    	movie = new Movie();
+    	movie.setTitle("Spider-Man: No Way Home");
+    	movie.setYearOfRelease(2021);
+    	
+    	genericRepository.insert(movie);
+    	
+    	set.add(movie);
+    	
+    	Actor actor = new Actor();
+    	actor.setName("Tom");
+    	actor.setLastName("Holland");
+    	actor.setTotalFilm(3);
+    	actor.setYearOfBirth(1996);
+    	actor.setMovies(set);
+    	
+    	genericRepository.insert(actor);
+    	
+    	actor = new Actor();
+    	actor.setName("Mark");
+    	actor.setLastName("Wahlberg");
+    	actor.setTotalFilm(1);
+    	actor.setYearOfBirth(1971);
+    	
+    	Set<Movie> set2 = new HashSet<>();
+    	set2.add(genericRepository.findById(2, Movie.class));
+    	
+    	actor.setMovies(set2);
+    	
+    	genericRepository.insert(actor);
+    	
+    	Genre genre = new Genre();
+    	genre.setName("Azione");
+    	
+    	genericRepository.insert(genre);
+    	
+    	genre = new Genre();
+    	genre.setName("Avventura");
+    	
+    	genericRepository.insert(genre);
+    	
+    	GenreRepository genreRepo = new GenreRepository(entityManager);
 
-//        // Create two Students
-//        create(1, "Alice", 22); // Alice will get an id 1
-//        create(2, "Bob", 20); // Bob will get an id 2
-//        create(3, "Charlie", 25); // Charlie will get an id 3
-//
-//        // Update the age of Bob using the id
-//        upate(2, "Bob", 25);
-//
-//        // Delete the Alice from database
-//        delete(1);
-//
-//        // Print all the Students
-//        List<Student> students = readAll();
-//        if (students != null) {
-//            for (Student stu : students) {
-//                System.out.println(stu);
-//            }
-//        }
-
+    	List<Genre> list = genreRepo.retrieveAll();
+    	
+    	for(Genre g: list) {
+    		System.out.println(g);
+    	}
+    	
+    	list = genreRepo.retrieveByName("Azione");
+    	for(Genre g: list) {
+    		System.out.println(g);
+    	}
+    	
+    	Genre genreRetrieved = genericRepository.findById(2, Genre.class);
+    	
+    	System.out.println("Retrieved genre by id: "+genreRetrieved);
+    	
+    	Actor actorRetrieved = genericRepository.findById(1, Actor.class);
+    	
+    	System.out.println("Actor retrieved: "+actorRetrieved);
+    	
+    	ActorRepository actRepo = new ActorRepository(entityManager);
+    	
+    	List<Actor> actAfterYear = actRepo.allActorsAfter(1970);
+    	
+    	for(Actor a: actAfterYear) {
+    		System.out.println(a);
+    	}
+    	
+    	MovieRepository movieRepo = new MovieRepository(entityManager);
+    	
+    	List<Movie> listMovie = movieRepo.retrieveByTitle("Uncharted");
+    	
+    	for(Movie m: listMovie) {
+    		System.out.println(m);
+    	}
+    	
+//    	listMovie = movieRepo.leftJoinWithActor();
+//    	
+//    	for(Movie m: listMovie) {
+//    		System.out.println(m);
+//    	}
+    	
         // NEVER FORGET TO CLOSE THE ENTITY_MANAGER_FACTORY
         ENTITY_MANAGER_FACTORY.close();
     }

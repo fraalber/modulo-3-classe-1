@@ -1,14 +1,12 @@
 package com.classe1.jpa;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,7 +19,7 @@ public class Movie implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)  
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "movie_id", unique = true)
 	private int id;
 	
@@ -33,9 +31,7 @@ public class Movie implements Serializable{
 	
 	@Column(name = "genre_id", nullable = false)
 	private int genreId;
-	
-	@ManyToMany
-	private Set<Actor> actor;
+
 
 	public String getTitle() {
 		return title;
