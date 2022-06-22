@@ -30,7 +30,7 @@ public class Movie extends Base implements Serializable{
 	private int releaseYear;
 	
 	
-	@Column(name = "genre_id", unique = true)
+	@Column(name = "genre_id", unique = false)
 	private int genreId;
 	
 	@ManyToMany
@@ -39,6 +39,7 @@ public class Movie extends Base implements Serializable{
 			joinColumns = @JoinColumn(name = "movie_id"),
 			inverseJoinColumns = @JoinColumn(name = "actor_id")
 			)
+//	@ManyToMany(mappedBy = "actedInMovies")
 	Set<Actor> actorsInTheMovie;
 	
 	
