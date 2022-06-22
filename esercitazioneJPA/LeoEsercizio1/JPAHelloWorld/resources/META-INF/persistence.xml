@@ -6,7 +6,9 @@
 		<!-- Persistence provider -->
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<!-- Entity classes -->
-		<class>com.classe1.jpa.Student</class>
+		<class>com.classe1.jpa.Actor</class>
+		<class>com.classe1.jpa.Genre</class>
+		<class>com.classe1.jpa.Movie</class>
 		<properties>
 			<!-- The JDBC driver of your database -->
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
