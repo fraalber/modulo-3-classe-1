@@ -16,7 +16,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-    	//MODIFICA
         // Create two Students
         create(1, "Alice", 22); // Alice will get an id 1
         create(2, "Bob", 20); // Bob will get an id 2
