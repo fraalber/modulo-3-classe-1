@@ -80,6 +80,17 @@ public class Actor extends Base implements Serializable {
 		this.birthdateYear = birthdateYear;
 	}
 
+	
+
+	public Set<Movie> getActedInMovies() {
+		return actedInMovies;
+	}
+
+
+	public void setActedInMovies(Set<Movie> actedInMovies) {
+		this.actedInMovies = actedInMovies;
+	}
+
 
 	@Override
 	public String toString() {

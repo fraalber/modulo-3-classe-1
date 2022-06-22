@@ -67,6 +67,14 @@ public class Movie extends Base implements Serializable{
 	public void setGenreId(int genreId) {
 		this.genreId = genreId;
 	}
+	public Set<Actor> getActorsInTheMovie() {
+		return actorsInTheMovie;
+	}
+	public void setActorsInTheMovie(Set<Actor> actorsInTheMovie) {
+		this.actorsInTheMovie = actorsInTheMovie;
+	}
+	
+	
 	
 	
 	
