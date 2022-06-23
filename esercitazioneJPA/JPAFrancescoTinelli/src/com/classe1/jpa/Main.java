@@ -25,7 +25,7 @@ public class Main {
         upate(2, "Bob", 25);
 
         // Delete the Alice from database
-        delete(1);
+        //delete(1);
 
         // Print all the Students
         List<Student> students = readAll();

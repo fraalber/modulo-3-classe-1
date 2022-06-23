@@ -16,24 +16,26 @@ public class Main {
 
     public static void main(String[] args) {
 
+    	//MODIFICA
         // Create two Students
-        create(1, "Alice", 22); // Alice will get an id 1
-        create(2, "Bob", 20); // Bob will get an id 2
-        create(3, "Charlie", 25); // Charlie will get an id 3
+        //create(1, "Alice", 22); // Alice will get an id 1
+        //create(2, "Bob", 20); // Bob will get an id 2
+        //create(3, "Charlie", 25); // Charlie will get an id 3
 
         // Update the age of Bob using the id
-        upate(2, "Bob", 25);
+        //upate(2, "Bob", 25);
 
         // Delete the Alice from database
-        delete(1);
+        //delete(1);
 
-        // Print all the Students
+        // Print all the Students 
+        /**
         List<Student> students = readAll();
         if (students != null) {
             for (Student stu : students) {
                 System.out.println(stu);
             }
-        }
+        }**/
 
         // NEVER FORGET TO CLOSE THE ENTITY_MANAGER_FACTORY
         ENTITY_MANAGER_FACTORY.close();
@@ -46,7 +48,7 @@ public class Main {
      * @param age
      */
     //@Transactional
-    public static void create(int id, String name, int age) {
+    /**public static void create(int id, String name, int age) {
         // Create an EntityManager
         EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -79,14 +81,14 @@ public class Main {
             // Close the EntityManager
             manager.close();
         }
-    }
+    }**/
 
     /**
      * Read all the Students.
      * 
      * @return a List of Students
      */
-    public static List<Student> readAll() {
+    /**public static List<Student> readAll() {
 
         List<Student> students = null;
 
@@ -119,13 +121,15 @@ public class Main {
         }
         return students;
     }
+    **/
 
     /**
      * Delete the existing Student.
      * 
      * @param id
      */
-    public static void delete(int id) {
+    
+    /**public static void delete(int id) {
         // Create an EntityManager
         EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -156,7 +160,7 @@ public class Main {
             manager.close();
         }
     }
-
+	**/
     /**
      * Update the existing Student.
      * 
@@ -164,6 +168,7 @@ public class Main {
      * @param name
      * @param age
      */
+    /**
     public static void upate(int id, String name, int age) {
         // Create an EntityManager
         EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
@@ -199,4 +204,5 @@ public class Main {
             manager.close();
         }
     }
+    **/
 }
