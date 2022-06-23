@@ -1,52 +1,63 @@
-package com.classe1.jpa;
+package main;
 
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 
-import javax.persistence.*;
-import javax.transaction.Transactional;
+import com.classi.jpa.Actor;
+import com.classi.jpa.Genre;
+import com.classi.jpa.Movie;
+
+import dao.GenreRepository;
 
 public class Main {
 
-    //@PersistenceContext
-    //private EntityManager entityManager;
-
-    // Create an EntityManagerFactory when you start the application.
+	 // Create an EntityManagerFactory when you start the application.
     private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence
-            .createEntityManagerFactory("JavaHelps");
-
-    public static void main(String[] args) {
-
-        // Create two Students
-        create(1, "Alice", 22); // Alice will get an id 1
-        create(2, "Bob", 20); // Bob will get an id 2
-        create(3, "Charlie", 25); // Charlie will get an id 3
-
-        // Update the age of Bob using the id
-        upate(2, "Bob", 25);
-
-        // Delete the Alice from database
-        delete(1);
-
-        // Print all the Students
-        List<Student> students = readAll();
-        if (students != null) {
-            for (Student stu : students) {
-                System.out.println(stu);
-            }
-        }
-
-        // NEVER FORGET TO CLOSE THE ENTITY_MANAGER_FACTORY
-        ENTITY_MANAGER_FACTORY.close();
-    }
-
-    /**
-     * Create a new Student.
-     * 
-     * @param name
-     * @param age
-     */
-    //@Transactional
-    public static void create(int id, String name, int age) {
+            .createEntityManagerFactory("JpaHelps");
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println("Inizia main");
+		GenreRepository genreDAO = new GenreRepository();
+		
+		//try creating an Actor
+		
+//		createActor(1, "Tom", "Cruise", 1979);
+		createActorNoId("Tom", "Cruise", 1977);
+		createActorNoId("Tom", "Cruise", 1970);
+		createActorNoId("Tom", "Cruise", 1976);
+		createActorNoId("Tom", "Cruise", 1975);
+		
+		//Creating movie
+		createMovieNoId("Mission Impossible", 1995, 3);
+		
+		//Creating Genre
+//		createGenreNoId("azione");
+		genreDAO.createGenreNoId(ENTITY_MANAGER_FACTORY, "Azione");
+		genreDAO.createGenreNoId(ENTITY_MANAGER_FACTORY, "Commedia");
+		genreDAO.createGenreNoId(ENTITY_MANAGER_FACTORY, "Drammatico");
+		genreDAO.createGenreNoId(ENTITY_MANAGER_FACTORY, "Romantico");
+		
+		//Deleting a genre
+		genreDAO.deleteGenre(ENTITY_MANAGER_FACTORY, 2);
+		
+		
+		//Retrieving all genres 
+		genreDAO.readAll(ENTITY_MANAGER_FACTORY);
+		
+		//Retrieving a genre by id
+		genreDAO.readGenreWithId(ENTITY_MANAGER_FACTORY, 3);
+		
+		//Retrieving a genre by name
+		genreDAO.readGenreWithName(ENTITY_MANAGER_FACTORY, "Romantico");
+		
+		
+	}
+	
+	
+	public static void createActor(int id, String name, String surname, int birthdateYear) {
         // Create an EntityManager
         EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -58,13 +69,14 @@ public class Main {
             transaction.begin();
 
             // Create a new Student object
-            Student stu = new Student();
-            stu.setId(id);
-            stu.setName(name);
-            stu.setAge(age);
+            Actor act = new Actor();
+            act.setId(id);
+            act.setName(name);
+            act.setLastName(surname);
+            act.setBirthdate(birthdateYear);
 
             // Save the student object
-            manager.persist(stu);
+            manager.persist(act);
 
             // Commit the transaction
             transaction.commit();
@@ -80,16 +92,9 @@ public class Main {
             manager.close();
         }
     }
-
-    /**
-     * Read all the Students.
-     * 
-     * @return a List of Students
-     */
-    public static List<Student> readAll() {
-
-        List<Student> students = null;
-
+	
+	
+	public static void createActorNoId(String name, String surname, int birthdateYear) {
         // Create an EntityManager
         EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -100,9 +105,14 @@ public class Main {
             // Begin the transaction
             transaction.begin();
 
-            // Get a List of Students
-            students = manager.createQuery("SELECT s FROM Student s",
-                    Student.class).getResultList();
+            // Create a new Student object
+            Actor act = new Actor();
+            act.setName(name);
+            act.setLastName(surname);
+            act.setBirthdate(birthdateYear);
+
+            // Save the student object
+            manager.persist(act);
 
             // Commit the transaction
             transaction.commit();
@@ -117,15 +127,9 @@ public class Main {
             // Close the EntityManager
             manager.close();
         }
-        return students;
     }
-
-    /**
-     * Delete the existing Student.
-     * 
-     * @param id
-     */
-    public static void delete(int id) {
+	
+	public static void createMovieNoId(String title, int releaseYear , int genreId) {
         // Create an EntityManager
         EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -136,11 +140,14 @@ public class Main {
             // Begin the transaction
             transaction.begin();
 
-            // Get the Student object
-            Student stu = manager.find(Student.class, id);
+            // Create a new Student object
+            Movie mov = new Movie();
+            mov.setTitle(title);
+            mov.setReleaseYear(releaseYear);
+            mov.setGenreId(genreId);
 
-            // Delete the student
-            manager.remove(stu);
+            // Save the student object
+            manager.persist(mov);
 
             // Commit the transaction
             transaction.commit();
@@ -156,15 +163,8 @@ public class Main {
             manager.close();
         }
     }
-
-    /**
-     * Update the existing Student.
-     * 
-     * @param id
-     * @param name
-     * @param age
-     */
-    public static void upate(int id, String name, int age) {
+	
+	public static void createGenreNoId(String name) {
         // Create an EntityManager
         EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -175,15 +175,12 @@ public class Main {
             // Begin the transaction
             transaction.begin();
 
-            // Get the Student object
-            Student stu = manager.find(Student.class, id);
+            // Create a new Student object
+            Genre gen = new Genre();
+            gen.setName(name);
 
-            // Change the values
-            stu.setName(name);
-            stu.setAge(age);
-
-            // Update the student
-            manager.persist(stu);
+            // Save the student object
+            manager.persist(gen);
 
             // Commit the transaction
             transaction.commit();
@@ -199,4 +196,5 @@ public class Main {
             manager.close();
         }
     }
+	
 }
