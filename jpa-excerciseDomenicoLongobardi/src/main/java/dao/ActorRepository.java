@@ -56,7 +56,7 @@ public class ActorRepository {
             // Begin the transaction
             transaction.begin();
 
-            // Get a List of Students
+            // Get a List of Actors
             act = manager.createQuery("SELECT a FROM Actor a WHERE a.id = " + id,
                     Actor.class).getSingleResult();
 
@@ -92,7 +92,7 @@ public class ActorRepository {
             // Begin the transaction
             transaction.begin();
 
-            // Get a List of Students
+            // Get a List of Actors
             act = manager.createQuery("SELECT a FROM Actor a WHERE a.birthdateYear > " + year,
                     Actor.class).getResultList();
 
@@ -130,7 +130,7 @@ public class ActorRepository {
             // Begin the transaction
             transaction.begin();
 
-            // Get a List of Students
+            // Get a List of Actors
             act = manager.createQuery("SELECT a FROM Actor a WHERE a.name = '" + name + "'",
                     Actor.class).getResultList();
 

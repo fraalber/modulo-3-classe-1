@@ -15,6 +15,7 @@ import com.classi.jpa.Movie;
 
 import dao.ActorRepository;
 import dao.GenreRepository;
+import dao.MovieRepository;
 
 public class Main {
 	
@@ -29,6 +30,7 @@ public class Main {
 		System.out.println("Inizia main");
 		GenreRepository genreDAO = new GenreRepository();
 		ActorRepository actorDAO = new ActorRepository();
+		MovieRepository movieDAO = new MovieRepository();
 		
 		//try creating an Actor
 		
@@ -79,13 +81,20 @@ public class Main {
 		Set<Movie> movies = new HashSet<Movie>();
 		movies.add(movie);
 		
-		Actor act = new Actor();
-		act.setName("Nicolas");
-		act.setLastName("Cage");
-		act.setBirthdate(1977);
-		act.setActedInMovies(movies);
+		Actor act1 = new Actor();
+		act1.setName("Nicolas");
+		act1.setLastName("Cage");
+		act1.setBirthdate(1977);
+		act1.setActedInMovies(movies);
 		
-		actorDAO.createActorNoId(ENTITY_MANAGER_FACTORY, act);
+		Actor act2 = new Actor();
+		act2.setName("Nicola");
+		act2.setLastName("Gabbia");
+		act2.setBirthdate(1977);
+		act2.setActedInMovies(movies);
+		
+		actorDAO.createActorNoId(ENTITY_MANAGER_FACTORY, act1);
+		actorDAO.createActorNoId(ENTITY_MANAGER_FACTORY, act2);
 		
 		//Find actor with a certain id
 		actorDAO.findActorWithId(ENTITY_MANAGER_FACTORY, 5);
@@ -95,6 +104,13 @@ public class Main {
 		
 		//Find actors with a specific name
 		actorDAO.findActorWithName(ENTITY_MANAGER_FACTORY, "tom");
+		
+		
+		//Find all movies
+		movieDAO.readAllMovies(ENTITY_MANAGER_FACTORY);
+		
+		//Find actors in movie
+		movieDAO.findActorsInMovie(ENTITY_MANAGER_FACTORY, 1);
 		
 		
 	}
