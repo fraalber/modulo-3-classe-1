@@ -3,28 +3,32 @@ package com.classe1.jpa;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
 
-@Entity
-@Table(name = "genres")
-public class Genre implements Serializable{
+@MappedSuperclass
+public class Person implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "genre_id", unique = true)
+	@Column(name = "person_id", unique = true)
 	private int id;
-	
+
 	@Column(name = "name", nullable = false)
 	private String name;
+
+	@Column(name = "last_name", nullable = false)
+	private String lastName;
+
+	@Column(name = "year_of_birth", nullable = false)
+	private int yearOfBirth;
 
 	public int getId() {
 		return id;
@@ -42,9 +46,20 @@ public class Genre implements Serializable{
 		this.name = name;
 	}
 
-	@Override
-	public String toString() {
-		return "Genre [id=" + id + ", name=" + name + "]";
+	public String getLastName() {
+		return lastName;
 	}
 
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public int getYearOfBirth() {
+		return yearOfBirth;
+	}
+
+	public void setYearOfBirth(int yearOfBirth) {
+		this.yearOfBirth = yearOfBirth;
+	}
+	
 }

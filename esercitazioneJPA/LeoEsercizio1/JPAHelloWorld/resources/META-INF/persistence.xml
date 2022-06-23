@@ -9,6 +9,7 @@
 		<class>com.classe1.jpa.Actor</class>
 		<class>com.classe1.jpa.Genre</class>
 		<class>com.classe1.jpa.Movie</class>
+		<class>com.classe1.jpa.Person</class>
 		<properties>
 			<!-- The JDBC driver of your database -->
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
