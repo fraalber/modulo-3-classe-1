@@ -6,12 +6,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
+import com.classi.jpa.Actor;
 import com.classi.jpa.Genre;
 
-public class GenreRepository {
+public class ActorRepository {
 	
 	
-	public void createGenreNoId(EntityManagerFactory entityManager, String name) {
+	public void createActorNoId(EntityManagerFactory entityManager, Actor actor) {
         // Create an EntityManager
         EntityManager manager = entityManager.createEntityManager();
         EntityTransaction transaction = null;
@@ -22,12 +23,9 @@ public class GenreRepository {
             // Begin the transaction
             transaction.begin();
 
-            // Create a new Student object
-            Genre gen = new Genre();
-            gen.setName(name);
 
-            // Save the student object
-            manager.persist(gen);
+            // Save the actor object
+            manager.persist(actor);
 
             // Commit the transaction
             transaction.commit();
@@ -44,42 +42,9 @@ public class GenreRepository {
         }
     }
 	
-	public void deleteGenre(EntityManagerFactory entityManager, int id) {
-        // Create an EntityManager
-        EntityManager manager = entityManager.createEntityManager();
-        EntityTransaction transaction = null;
+	public static Actor findActorWithId(EntityManagerFactory entityManager, int id) {
 
-        try {
-            // Get a transaction
-            transaction = manager.getTransaction();
-            // Begin the transaction
-            transaction.begin();
-
-            // Get the Student object
-            Genre gen = manager.find(Genre.class, id);
-
-            // Delete the student
-            manager.remove(gen);
-
-            // Commit the transaction
-            transaction.commit();
-        } catch (Exception ex) {
-            // If there are any exceptions, roll back the changes
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            // Print the Exception
-            ex.printStackTrace();
-        } finally {
-            // Close the EntityManager
-            manager.close();
-        }
-    }
-	
-	
-	public static List<Genre> readAll(EntityManagerFactory entityManager) {
-
-        List<Genre> genres = null;
+        Actor act = null;
 
         // Create an EntityManager
         EntityManager manager = entityManager.createEntityManager();
@@ -91,9 +56,9 @@ public class GenreRepository {
             // Begin the transaction
             transaction.begin();
 
-            // Get a List of Students
-            genres = manager.createQuery("SELECT g FROM Genre g",
-                    Genre.class).getResultList();
+            // Get a List of Actors
+            act = manager.createQuery("SELECT a FROM Actor a WHERE a.id = " + id,
+                    Actor.class).getSingleResult();
 
             // Commit the transaction
             transaction.commit();
@@ -109,16 +74,13 @@ public class GenreRepository {
             manager.close();
         }
         
-        for (int i = 0; i< genres.size();i++) {
-        	System.out.println("Genere con id " + genres.get(i).getId() + ": " + genres.get(i).getName());;
-        }
-        return genres;
+        System.out.println("Actor con id " + act.getId() + ": " + act.toString());
+        return act;
     }
 	
-	
-	public static Genre readGenreWithId(EntityManagerFactory entityManager, int id) {
+	public static List<Actor> findActorBornAfterYear(EntityManagerFactory entityManager, int year) {
 
-        Genre gen = null;
+        List<Actor> act = null;
 
         // Create an EntityManager
         EntityManager manager = entityManager.createEntityManager();
@@ -130,9 +92,9 @@ public class GenreRepository {
             // Begin the transaction
             transaction.begin();
 
-            // Get a List of Students
-            gen = manager.createQuery("SELECT g FROM Genre g WHERE g.id = " + id,
-                    Genre.class).getSingleResult();
+            // Get a List of Actors
+            act = manager.createQuery("SELECT a FROM Actor a WHERE a.birthdateYear > " + year,
+                    Actor.class).getResultList();
 
             // Commit the transaction
             transaction.commit();
@@ -147,14 +109,16 @@ public class GenreRepository {
             // Close the EntityManager
             manager.close();
         }
+        for (int i=0;i<act.size();i++) {
+        	System.out.println("Actor con birthdate year > " + year + ": " + act.get(i).toString());
+        }
         
-        System.out.println("Genere con id " + gen.getId() + ": " + gen.getName());
-        return gen;
+        return act;
     }
 	
-	public static Genre readGenreWithName(EntityManagerFactory entityManager, String name) {
+	public static List<Actor> findActorWithName(EntityManagerFactory entityManager, String name) {
 
-        Genre gen = null;
+        List<Actor> act = null;
 
         // Create an EntityManager
         EntityManager manager = entityManager.createEntityManager();
@@ -166,9 +130,9 @@ public class GenreRepository {
             // Begin the transaction
             transaction.begin();
 
-            // Get a List of Students
-            gen = manager.createQuery("SELECT g FROM Genre g WHERE g.name = " + "'" + name + "'",
-                    Genre.class).getSingleResult();
+            // Get a List of Actors
+            act = manager.createQuery("SELECT a FROM Actor a WHERE a.name = '" + name + "'",
+                    Actor.class).getResultList();
 
             // Commit the transaction
             transaction.commit();
@@ -183,10 +147,16 @@ public class GenreRepository {
             // Close the EntityManager
             manager.close();
         }
+        if (act.size()>0) {
+        	for (int i=0;i<act.size();i++) {
+            	System.out.println("Attore che ha come nome " + name + ": " + act.get(i).toString());
+            }
+        } else {
+        	System.out.println("Nessun attore con nome: " + name);
+        }
         
-        System.out.println("Il Genere trovato ha id: " + gen.getId() + " e  nome: " + gen.getName());
-        return gen;
+        
+        return act;
     }
-	
 
 }
