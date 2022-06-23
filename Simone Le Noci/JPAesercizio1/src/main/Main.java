@@ -1,9 +1,16 @@
-package com.esercizio1.jpa;
+package main;
 
 import java.util.List;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+
+import com.esercizio1.jpa.ActorEntity;
+import com.esercizio1.jpa.GenreEntity;
+import com.esercizio1.jpa.MovieEntity;
+
+import repository.ActorRepository;
+import repository.MovieRepository;
 
 public class Main {
 
@@ -20,7 +27,6 @@ public class Main {
 		create("Thriller");
 		create("Horror");
 		create("Adventure");
-
 
 		// Delete the Thriller from database
 		delete(1);
@@ -51,7 +57,29 @@ public class Main {
 				System.out.println(gen);
 			}
 		}
-
+		
+		// Punto 4 - INIZIO
+		
+		ActorEntity actor1 = new ActorEntity();
+		actor1.setName("Simone");
+		actor1.setLast_name("Le Noci");
+		actor1.setYear_of_birth(2001);
+		
+		ActorRepository actrep = new ActorRepository();
+		
+		actrep.create(actor1);
+		
+		System.out.println(actrep.readById(1));
+		System.out.println(actrep.readByYear(2000));
+		
+		// Punto 4 - FINE
+		
+		// Punto 5 - INIZIO
+		
+		
+		
+		// Punto 5 - FINE
+		
 		// NEVER FORGET TO CLOSE THE ENTITY_MANAGER_FACTORY
 		ENTITY_MANAGER_FACTORY.close();
 	}
